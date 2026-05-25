@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- BASE:START (managed by Coding Agent — do not edit) -->
+<base href="/morpheus/">
+<!-- BASE:END -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+
+<!-- SEO Meta Tags -->
+<title>Morpheus AI — Strategic AI Architecture</title>
+<meta property="og:title" content="Morpheus AI — Strategic AI Architecture" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Morpheus AI — Strategic AI Architecture" />
+<!-- End SEO Meta Tags -->
+
+
+<script data-field-replace>
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var fields={};
+  var paramMap={
+    'first_name':'firstName','last_name':'lastName','full_name':'fullName',
+    'email':'email','phone':'phone','company':'company',
+    'city':'city','state':'state','country':'country'
+  };
+  var skipTags={'SCRIPT':1,'STYLE':1,'NOSCRIPT':1,'TEXTAREA':1,'CODE':1,'PRE':1};
+  var hasUrlFields=false;
+  for(var p in paramMap){
+    var v=params.get(p);
+    if(v){fields[paramMap[p]]=v;hasUrlFields=true;}
+  }
+  var contactId=params.get('contact_id');
+  function esc(s){
+    if(!s)return s;
+    var d=document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+  function doReplace(data){
+    var r={};
+    r['{{full_name}}']=esc(((data.firstName||'')+' '+(data.lastName||'')).trim()||((data.fullName||data.name)||''));
+    r['{{first_name}}']=esc(data.firstName||(data.name?data.name.split(' ')[0]:'')||'');
+    r['{{last_name}}']=esc(data.lastName||(data.name&&data.name.indexOf(' ')>-1?data.name.substring(data.name.indexOf(' ')+1):'')||'');
+    r['{{email}}']=esc(data.email||'');
+    r['{{phone}}']=esc(data.phone||'');
+    r['{{company}}']=esc(data.company||'');
+    r['{{city}}']=esc(data.city||'');
+    r['{{state}}']=esc(data.state||'');
+    r['{{country}}']=esc(data.country||'');
+    r['{{date}}']=new Date().toLocaleDateString();
+    r['{{time}}']=new Date().toLocaleTimeString();
+    r['{{location}}']=[data.city,data.state,data.country].filter(Boolean).join(', ');
+    r['{{tracking_id}}']=esc(data.trackingId||'');
+    r['{{lastClickedProduct}}']=esc(data.lastClickedProduct||'');
+    r['{{lastProductClickDate}}']=esc(data.lastProductClickDate||'');
+    r['{{lastClickedProductPrice}}']=esc(data.lastClickedProductPrice||'');
+    r['{{lastClickedProductURL}}']=esc(data.lastClickedProductURL||'');
+    r['{{productsClickedCount}}']=esc(data.productsClickedCount||'0');
+    r['{{ip_address}}']=esc(data.ipAddress||'');
+    r['{{ip}}']=esc(data.ipAddress||'');
+    if(data.customFields){
+      for(var k in data.customFields){
+        r['{{'+k+'}}']=esc(String(data.customFields[k]||''));
+      }
+    }
+    params.forEach(function(v,k){
+      if(!paramMap[k]&&k!=='contact_id'&&k!=='page_id'&&k.indexOf('utm_')!==0){
+        r['{{'+k+'}}']=esc(v);
+      }
+    });
+    var hasValues=false;
+    for(var key in r){if(r[key]){hasValues=true;break;}}
+    if(!hasValues)return;
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+      acceptNode:function(n){
+        var p=n.parentNode;
+        if(p&&skipTags[p.nodeName])return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while(node=walker.nextNode()){
+      var txt=node.nodeValue;
+      if(txt&&txt.indexOf('{{')>-1){
+        var changed=txt;
+        for(var ph in r){
+          if(r[ph]&&changed.indexOf(ph)>-1){
+            changed=changed.split(ph).join(r[ph]);
+          }
+        }
+        if(changed!==txt)node.nodeValue=changed;
+      }
+    }
+    var attrs=['value','placeholder','content','alt','title'];
+    attrs.forEach(function(attr){
+      var els=document.querySelectorAll('['+attr+'*="{{"]');
+      for(var i=0;i<els.length;i++){
+        var tag=els[i].tagName;
+        if(skipTags[tag])continue;
+        var val=els[i].getAttribute(attr);
+        if(val){
+          var nv=val;
+          for(var ph in r){
+            if(r[ph]&&nv.indexOf(ph)>-1){
+              nv=nv.split(ph).join(r[ph]);
+            }
+          }
+          if(nv!==val)els[i].setAttribute(attr,nv);
+        }
+      }
+    });
+  }
+  function run(){
+    if(contactId){
+      var xhr=new XMLHttpRequest();
+      xhr.open('GET','https://paymegpt.com/api/landing/context/'+encodeURIComponent(contactId)+'?page_id=2955');
+      xhr.onload=function(){
+        if(xhr.status===200){
+          try{
+            var resp=JSON.parse(xhr.responseText);
+            if(resp.success&&resp.contact){
+              var merged=resp.contact;
+              for(var k in fields){merged[k]=fields[k];}
+              doReplace(merged);
+              return;
+            }
+          }catch(e){}
+        }
+        if(hasUrlFields)doReplace(fields);
+      };
+      xhr.onerror=function(){if(hasUrlFields)doReplace(fields);};
+      xhr.send();
+    }else if(hasUrlFields){
+      doReplace(fields);
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}
+  else{run();}
+})();
+</script>
+<script data-payment>
+(function(){
+  var slug='ZwVXNw2XV';
+  var apiBase='https://paymegpt.com';
+  var successSubtext='';var successBtnLabel='Continue';var successBtnColor='#16a34a';var successRedirect='';
+  function findEmail(){
+    var ids=['email','emailAddress','buyer-email','buyerEmail','user-email','userEmail','checkout-email','customer-email','contact-email'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value&&el.value.includes('@'))return el.value.trim();}
+    var inputs=document.querySelectorAll('input[type="email"],input[name*="email"],input[placeholder*="email"],input[placeholder*="Email"]');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value&&inputs[j].value.includes('@'))return inputs[j].value.trim();}
+    return '';
+  }
+  function findName(){
+    var ids=['name','fullName','full-name','buyer-name','buyerName','customer-name','userName','user-name'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value)return el.value.trim();}
+    var inputs=document.querySelectorAll('input[name*="name"]:not([name*="email"]):not([type="email"]),input[placeholder*="name"]:not([placeholder*="email"]):not([type="email"]),input[placeholder*="Name"]:not([type="email"])');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value)return inputs[j].value.trim();}
+    return '';
+  }
+  var __realProcessPayment=function(a,b,c,d,e){
+    var amountCents,email,productName,productDescription,customerName,quantity;
+    if(a&&typeof a==='object'){
+      amountCents=a.amountCents;email=a.email;productName=a.productName;
+      productDescription=a.productDescription||'';customerName=a.name||'';quantity=a.quantity||1;
+    }else{
+      amountCents=typeof a==='number'?a:0;productName=typeof b==='string'?b:'';
+      productDescription=typeof c==='string'?c:'';email='';customerName='';quantity=1;
+    }
+    if(!email)email=findEmail();
+    if(!customerName)customerName=findName();
+    if(!productName){alert('Product name is required.');return Promise.reject('no_product_name');}
+    if(!amountCents||amountCents<100){alert('Amount must be at least $1.00');return Promise.reject('invalid_amount');}
+    if(!email){alert('Please enter your email address.');return Promise.reject('no_email');}
+    var successBase=window.location.href.split('?')[0];
+    var __pLoc=(document.documentElement.lang||navigator.language||'en');
+    return fetch(apiBase+'/api/landing-pages/public/'+slug+'/payment/checkout',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,name:customerName,amountCents:amountCents,productName:productName,productDescription:productDescription,quantity:quantity,locale:__pLoc,successUrl:successBase+'?payment=success&product='+encodeURIComponent(productName)+'&session_id={CHECKOUT_SESSION_ID}',cancelUrl:successBase+'?payment=cancelled'})
+    }).then(function(r){return r.json();}).then(function(d){
+      if(d.checkoutUrl){window.location.href=d.checkoutUrl;}
+      else{alert(d.error||'Failed to process payment');throw new Error(d.error);}
+    });
+  };
+  Object.defineProperty(window,'__processPayment',{value:__realProcessPayment,writable:false,configurable:false});
+  document.addEventListener('DOMContentLoaded',function(){
+    var urlParams=new URLSearchParams(window.location.search);
+    if(urlParams.get('payment')==='success'){
+      var pName=urlParams.get('product')||'your item';
+      var overlay=document.createElement('div');overlay.id='payment-success-overlay';
+      overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999999;font-family:system-ui,-apple-system,sans-serif;';
+      function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+      var subTxt=successSubtext||('Thank you for purchasing '+pName+'.');
+      overlay.innerHTML='<div style="background:white;border-radius:16px;padding:40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.15);"><div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><h2 style="margin:0 0 12px;font-size:24px;font-weight:700;color:#111827;">Payment Successful!</h2><p style="margin:0 0 24px;color:#6b7280;font-size:16px;">'+esc(subTxt)+'</p><button id="lp-pay-success-btn" style="padding:12px 32px;font-size:16px;font-weight:600;background:'+successBtnColor+';color:white;border:none;border-radius:8px;cursor:pointer;">'+esc(successBtnLabel)+'</button></div>';
+      document.body.appendChild(overlay);
+      var pBtn=document.getElementById('lp-pay-success-btn');
+      if(pBtn){pBtn.addEventListener('click',function(){if(successRedirect){window.location.href=successRedirect;}else{overlay.remove();window.history.replaceState({},'',window.location.pathname);}});}
+    }
+  });
+})();
+</script>  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="cur" id="cur"></div><div class="ring" id="rng"></div>
+<nav data-section="navbar"><div class="logo">MORPHEUS</div><div class="ntag">Strategic AI Architecture</div></nav>
+<div class="mw" data-section="announcement-ticker"><div class="mt" id="mt">
+<span class="mi">DIAGNOSE BROKEN WORKFLOWS <span class="md">◆</span></span><span class="mi">EXPOSE STRUCTURAL INEFFICIENCIES <span class="md">◆</span></span><span class="mi">DESIGN SCALABLE AI SYSTEMS <span class="md">◆</span></span><span class="mi">AUTOMATE OPERATIONS <span class="md">◆</span></span><span class="mi">AGENTIC LEVERAGE SYSTEMS <span class="md">◆</span></span><span class="mi">DIAGNOSE BROKEN WORKFLOWS <span class="md">◆</span></span><span class="mi">EXPOSE STRUCTURAL INEFFICIENCIES <span class="md">◆</span></span><span class="mi">DESIGN SCALABLE AI SYSTEMS <span class="md">◆</span></span><span class="mi">AUTOMATE OPERATIONS <span class="md">◆</span></span><span class="mi">AGENTIC LEVERAGE SYSTEMS <span class="md">◆</span></span>
+</div></div>
+<div class="mo" id="modal">
+<div class="mb">
+<div class="mt2">★ COMPLIMENTARY ASSESSMENT</div>
+<button class="mc" onclick="closeM()">✕</button>
+<h3 class="mh">Let's Talk Strategy</h3>
+<p class="ms">Fill in all three fields below to unlock your complimentary AI architecture assessment with Morpheus.</p>
+<div class="mf">
+<input id="fn" class="fi" type="text" placeholder="Full Name" oninput="chk()">
+<input id="fe" class="fi" type="email" placeholder="Business Email Address" oninput="chk()">
+<input id="fp" class="fi" type="tel" placeholder="Phone Number" oninput="chk()">
+<div id="ferr" class="me">PLEASE FILL IN ALL FIELDS TO CONTINUE</div>
+<button id="mbtn" class="btn mb2" onclick="sub()"><span>Claim My Assessment</span><span class="ar">→</span></button>
+</div>
+</div>
+</div>
+<section class="hero" data-section="hero">
+<div class="gbg"></div>
+<div class="ey" style="opacity:0;animation:fu .8s .1s forwards;">System-Level AI Agent</div>
+<h1 class="hh">Your operations<br><span class="ol">are leaking</span><br><span class="gl">leverage.</span></h1>
+<p class="hsub">Morpheus diagnoses broken workflows, exposes structural inefficiencies, and architects scalable AI systems — turning fragmented operations into automated leverage systems.</p>
+<div class="hcta">
+<button class="btn" onclick="openM()"><span>Scale My Business</span><span class="ar">→</span></button>
+<span class="hn">Complimentary Assessment ↗</span>
+</div>
+<div class="hst">
+<div><div class="sn">100%</div><div class="sl">Design to Implementation</div></div>
+<div><div class="sn">AI+</div><div class="sl">Human Expertise Synergy</div></div>
+<div><div class="sn">END-TO-END</div><div class="sl">Strategy &amp; Execution</div></div>
+</div>
+<div class="scl"><div class="sl2"></div></div>
+</section>
+<section class="sec rv" data-section="problem"><div class="si">
+<div class="ey">The Problem</div>
+<h2 class="sh2">Fragmented ops<br>are killing scale.</h2>
+<div class="pgrid">
+<div class="pc"><div class="pn">01</div><div class="pt">Broken Workflows</div><div class="pd">Manual hand-offs, redundant steps, and human error cascading through every process — silently costing you time and revenue.</div></div>
+<div class="pc"><div class="pn">02</div><div class="pt">Structural Inefficiencies</div><div class="pd">Processes built for a team of 5 now running a team of 50. The architecture never scaled with the ambition.</div></div>
+<div class="pc"><div class="pn">03</div><div class="pt">No AI Strategy</div><div class="pd">Scattered AI tools that don't talk to each other — solutions without a system, hype without leverage.</div></div>
+<div class="pc"><div class="pn">04</div><div class="pt">The Gap</div><div class="pd">The distance between where you are and smart agentic automation widens every day without a strategic architect in your corner.</div></div>
+</div>
+</div></section>
+<section class="sec rv" style="background:var(--void);" data-section="solution"><div class="si"><div class="sp">
+<div>
+<div class="ey">The Solution</div>
+<h2 class="sh2">Strategic AI Architecture at scale.</h2>
+<p class="si2">Morpheus is not a tool. It's a system-level AI agent that thinks in architecture — mapping your entire operational layer and rebuilding it for automated leverage and measurable results.</p>
+</div>
+<div><div class="pl">
+<div class="pi"><div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gld)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div><div class="pti">Deep Workflow Diagnosis</div><div class="pde">Morpheus audits every process, finds every leak, and maps the true cost of your current operations.</div></div></div>
+<div class="pi"><div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gld)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><div><div class="pti">Scalable System Design</div><div class="pde">Custom AI architecture blueprinted to your business model — not off-the-shelf. Yours.</div></div></div>
+<div class="pi"><div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gld)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div><div><div class="pti">Agentic Automation Build</div><div class="pde">From blueprint to deployed — intelligent agents that run your operations, not just assist them.</div></div></div>
+<div class="pi"><div class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gld)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div><div class="pti">Ongoing Optimization</div><div class="pde">Systems that learn, adapt, and improve — building compounding leverage over time.</div></div></div>
+</div></div>
+</div></div></section>
+<section class="dsec rv" data-section="danny-section"><div class="dg">
+<div class="dcopy">
+<div class="ey">The Differentiator</div>
+<h2>AI Intelligence.<br>Human Mastery.<br><span style="color:var(--gld)">One Outcome.</span></h2>
+<p>What sets <strong style="color:var(--gld);">Morpheus</strong> apart is the synergy between <strong>cutting-edge AI architecture</strong> and <strong style="color:#52c48a;">Danny Monzon</strong> — an award-winning Automation Specialist who bridges the gap from design all the way to implementation.</p>
+<p style="margin-top:14px;"><strong>You don't get a chatbot.</strong> You get a strategic partner who builds the infrastructure your business was always supposed to run on.</p>
+</div>
+<div class="dr">
+<div class="hw"><img id="hs" src="https://paymegpt.com/storage/uploads/danny-monzon-headshot.png" alt="Danny Monzon — Award-Winning Automation Specialist" style="width:100%;display:block;position:relative;z-index:1;filter:drop-shadow(0 18px 40px rgba(201,168,76,.15));"></div>
+<div class="db">
+<div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--mut);text-transform:uppercase;">Powered by</div>
+<div class="dn">Danny Monzon</div>
+<div class="dr2">Award-Winning Automation Specialist</div>
+<p class="dbi">Danny brings strategic vision and technical precision — architecting AI systems built for real-world scale. From diagnosis to deployment, the entire journey is owned end-to-end.</p>
+</div>
+</div>
+</div></section>
+<section class="sec rv" data-section="audience"><div class="si">
+<div class="ey">Who We Work With</div>
+<h2 class="sh2">Built for those<br>ready to scale.</h2>
+<div class="pills">
+<div class="pill">Founders</div><div class="pill">Agency Partners</div><div class="pill">Established Brands</div><div class="pill">Operators Ready to Automate</div><div class="pill">Teams Stuck in Manual Loops</div>
+</div>
+<p class="sdesc">Whether you're a founder drowning in manual operations, an agency building for clients, or an established brand with legacy processes — if you're ready to go from fragmented to fully automated, Morpheus was built for you.</p>
+</div></section>
+<section class="ctasec rv" data-section="cta">
+<h2 class="ctah">Stop operating.<br><span style="color:var(--gld)">Start scaling.</span></h2>
+<p class="ctas">Claim your complimentary strategic assessment and discover exactly where your operations are leaking leverage — and what it looks like fully automated.</p>
+<button class="btn" style="position:relative;z-index:1;" onclick="openM()"><span>Scale My Business</span><span class="ar">→</span></button>
+<p class="ctat">NO OBLIGATION · COMPLIMENTARY ASSESSMENT · REAL STRATEGY</p>
+</section>
+<footer data-section="footer"><div class="fl">MORPHEUS</div><div class="fc">© 2025 MORPHEUS AI · STRATEGIC AI ARCHITECTURE · POWERED BY DANNY MONZON</div></footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ChatLux.github.io/morpheus/sitemap.xml
